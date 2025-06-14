@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESTROGEN - Advanced Roblox Executor</title>
+    <style>
+        :root {
+            --primary: #efedfd; /* SlateBlue */
+            --secondary: #aaaaaa; /* SteelBlue */
+            --dark: #131313;
+            --darker: #1b1b1b;
+            --light: #e0e0e0;
+            --lighter: #f5f5f5;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: var(--dark);
+        }
+        
+        /* Animated Background */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: url('https://cdn.discordapp.com/attachments/1377048085695430696/1383523423627776041/image_upscaled.png') no-repeat center center/cover;
+    opacity: 1; /* Adjust opacity as needed */
+}
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                linear-gradient(45deg, 
+                    rgba(70, 130, 180, 0.05) 0%, 
+                    rgba(106, 90, 205, 0.05) 20%, 
+                    transparent 30%),
+                linear-gradient(-45deg, 
+                    rgba(70, 130, 180, 0.07) 0%, 
+                    rgba(106, 90, 205, 0.07) 20%, 
+                    transparent 30%);
+            background-size: 00px 00px;
+            animation: bgMove 60s linear infinite;
+        }
+        
+        @keyframes bgMove {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        header {
+            background: rgba(15, 15, 15, 0.8);
+            padding: 20px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: url('https://cdn.discordapp.com/attachments/1377048085695430696/1383523423627776041/image_upscaled.png?ex=684f1a18&is=684dc898&hm=3699741bbfbd26212cbf6c290a078386bb8d341b16fd7999f1f04c450d417422&') no-repeat center center/cover;
+}
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--lighter);
+        }
+        
+        /* 3D Preview Container */
+        .preview-container {
+            flex: 1;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .preview-image {
+            width: 1040px;
+            height: 545px;
+            background: url('https://cdn.discordapp.com/attachments/1377048085695430696/1383527751520092231/image.png?ex=684f1e20&is=684dcca0&hm=8e5e73aaaa62e8785d0dc30a26afa1b83c9af01db45cce9facfb158f59f553f8&') no-repeat center center/cover;
+            border-radius: 10px;
+            border: 2px solid rgba(66, 66, 66, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform-style: preserve-3d;
+            transition: transform 0.1s;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(87, 87, 87, 0.4);
+        }
+
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(134, 134, 134, 0.6);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            margin-left: 15px;
+             margin-top: 5px;
+        }
+        
+        .btn-secondary:hover {
+            margin-top: 5px;
+            background: transparent
+          
+        }
+        
+        .features {
+            padding: 100px 0;
+            background-color: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--lighter);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .feature-card p {
+            color: var(--lighter);
+        }
+        
+        .download {
+            padding: 100px 0;
+            background: rgba(14, 14, 14, 0.8);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .download-box {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(83, 83, 83, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .download-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .download-box p {
+            margin-bottom: 30px;
+            color: var(--lighter);
+        }
+        
+        .version-selector {
+            margin-bottom: 30px;
+        }
+        
+        .version-selector select {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px 30px;
+            border-radius: 5px;
+            min-width: 150px;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-item p {
+            color: var(--lighter);
+            font-size: 0.9rem;
+        }
+        
+        .support {
+            padding: 100px 0;
+            background-color: rgba(22, 22, 22, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        footer {
+            background-color: rgba(14, 14, 14, 0.8);
+            padding: 50px 0 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: var(--lighter);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #5865F2;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .discord-btn:hover {
+            background-color: #4752c4;
+            transform: translateY(-3px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .preview-container {
+                margin-top: 50px;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .preview-image {
+                width: 300px;
+                height: 200px;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .download-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h1>ESTROGEN</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="#support">Support</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>The Most Powerful Roblox Executor</h2>
+                    <p>Experience unparalleled performance with Estrogen - the next-generation Roblox exploit with advanced features, unmatched stability, and regular updates.</p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="btn">Download Now</a>
+                        <a href="#features" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-image" id="previewImage"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Estrogen?</h2>
+                <p>Estrogen offers cutting-edge features that set it apart from other executors in the market.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Blazing Fast</h3>
+                    <p>Optimized execution engine that runs scripts faster than any other executor available.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Undetected</h3>
+                    <p>Advanced anti-detection system keeps you safe from bans and kicks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Lua 5.4 Support</h3>
+                    <p>Full support for the latest Lua features and syntax.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>API Hooks</h3>
+                    <p>Advanced hooking system for maximum control over the game environment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Auto Updates</h3>
+                    <p>Regular updates with new features and bypasses to stay ahead of Roblox.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Dedicated support team ready to help with any issues you encounter.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="download" id="download">
+        <div class="container">
+            <div class="download-box">
+                <h2>Download Estrogen</h2>
+                <p>Get the latest version of Estrogen and start exploiting today. Select your preferred version below.</p>
+                
+                <div class="version-selector">
+                    <select id="versionSelect">
+                        <option value="https://www.mediafire.com/file/xhhxjp2x0r4yrnz/Debug.7z/file">Latest Version (v2.4.1)</option>
+                        <option value="https://www.mediafire.com/file/xhhxjp2x0r4yrnz/Debug.7z/file">Beta Version (v2.5.0b)</option>
+                        <option value="https://www.mediafire.com/file/xhhxjp2x0r4yrnz/Debug.7z/file">Legacy Version (v1.9.3)</option>
+                    </select>
+                </div>
+                
+                <a href="https://www.mediafire.com/file/xhhxjp2x0r4yrnz/Debug.7z/file" id="downloadLink" class="btn">Download Now</a>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3>50K+</h3>
+                        <p>Active Users</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>99%</h3>
+                        <p>Uptime</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="support" id="support">
+        <div class="container">
+            <div class="section-title">
+                <h2>Need Help?</h2>
+                <p>Join our community for support, updates, and to connect with other users.</p>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://discord.gg/example" class="discord-btn" target="_blank">
+                    <i class="fab fa-discord"></i> Join Our Discord
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">these do nothing btw</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+                <a href="#">Changelog</a>
+                <a href="#">Contact</a>
+            </div>
+            <p class="copyright">© 2025 Estrogen Executor. All rights reserved. Not affiliated with Roblox Corporation.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 3D Image Rotation Effect
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        
+        previewContainer.addEventListener('mousemove', (e) => {
+            const x = e.clientX - previewContainer.getBoundingClientRect().left;
+            const y = e.clientY - previewContainer.getBoundingClientRect().top;
+            
+            const centerX = previewContainer.offsetWidth / 2;
+            const centerY = previewContainer.offsetHeight / 2;
+            
+            const angleX = (y - centerY) / 20;
+            const angleY = (centerX - x) / 20;
+            
+            previewImage.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+        });
+        
+        previewContainer.addEventListener('mouseleave', () => {
+            previewImage.style.transform = 'rotateX(0) rotateY(0)';
+        });
+        
+        // Version selector functionality
+        const versionSelect = document.getElementById('versionSelect');
+        const downloadLink = document.getElementById('downloadLink');
+        
+        versionSelect.addEventListener('change', function() {
+            downloadLink.href = this.value;
+        });
+        
+        // Replace placeholder image with your actual preview image
+        // previewImage.style.backgroundImage = "url('your-preview-image.jpg')";
+    </script>
+</body>
+</html>
